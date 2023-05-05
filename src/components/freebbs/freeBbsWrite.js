@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Button from "react-bootstrap/Button";
 function FreeBbsWrite() {
   let history = useNavigate();
   const [title, setTitle] = useState("");
@@ -151,9 +151,9 @@ function FreeBbsWrite() {
           </tr>
           <tr>
             <td colSpan={4}>
-              <button type="submit" onClick={writeFreeBbs}>
+              <Button variant="success" size="sm" type="submit" onClick={writeFreeBbs}>
                 작성하기
-              </button>
+              </Button>
             </td>
           </tr>
         </tbody>

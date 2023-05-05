@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import FreeBbsReply from "./freeBbsReply";
 import FreeBbslikey from "./freeBbslikey";
 import FreeBbsReadcount from "./freeBbsReadcount";
+import FreeBbsModify from "./freeBbsModify";
+import Button from "react-bootstrap/Button";
 
 function FreeBbsDetail() {
   let navigate = useNavigate();
@@ -30,10 +32,10 @@ function FreeBbsDetail() {
   let params = useParams();
 
   let bbsSeq = params.bbsSeq;
-  
+
   const seqs = { memberSeq: memberSeq, bbsSeq: bbsSeq };
 
-  const qnaData = async (bbsSeq) => {
+  const bbsData = async (bbsSeq) => {
     const response = await axios.get("http://localhost:3000/getfreeBbs", {
       params: { bbsSeq: bbsSeq },
     });
@@ -41,8 +43,34 @@ function FreeBbsDetail() {
     setLoading(true); // 여기서 rendering 해 준다
   };
 
+  function delFeebbsByWriter() {
+    axios
+      .post("http://localhost:3000/delFeebbsByWriter", null, {
+        params: { bbsSeq: bbsSeq },
+      })
+      .then(function(resp) {
+        if (resp.data === "YES") {
+          alert("삭제되었습니다.");
+        } else {
+          alert("삭제에 실패했습니다");
+        }
+      })
+      .catch(function(err) {
+        alert(err);
+      });
+  }
+
+  function onRemove() {
+    if (window.confirm("정말 삭제하겠습니까? ")) {
+      delFeebbsByWriter();
+      navigate("/freeBoard");
+    } else {
+      alert("글 삭제를 취소합니다.");
+    }
+  }
+
   useEffect(() => {
-    qnaData(params.bbsSeq);
+    bbsData(params.bbsSeq);
     setReplySeq(params.bbsSeq);
   }, [params.bbsSeq]);
 
@@ -113,9 +141,22 @@ function FreeBbsDetail() {
         </tbody>
       </table>
       <br />
-      <button onClick={handleButtonClick}> 목록</button>
-      {freebbs.id == writer ? <button> 삭제</button> : null}
-      {freebbs.id == writer ? <button> 수정</button> : null}
+      <Button variant="outline-secondary" size="sm" onClick={handleButtonClick}>
+        목록
+      </Button>
+      &nbsp;&nbsp;
+      {freebbs.id == writer ? (
+        <Button variant="outline-secondary" size="sm" onClick={() => navigate(`/freeBbsModify/${bbsSeq}`)}>
+          수정
+        </Button>
+      ) : null}
+      &nbsp;&nbsp;{" "}
+      {freebbs.id == writer ? (
+        <Button variant="outline-secondary" size="sm" onClick={() => onRemove()}>
+          삭제
+        </Button>
+      ) : null}
+      &nbsp;&nbsp;
       <br /> <br />
       <br />
       <br />

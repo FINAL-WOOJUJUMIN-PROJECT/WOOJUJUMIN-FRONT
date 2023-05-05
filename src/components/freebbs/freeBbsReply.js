@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
 
 function FreeBbsReply(props) {
   let navigate = useNavigate();
@@ -44,7 +45,7 @@ function FreeBbsReply(props) {
           alert("등록되지 않았습니다");
         }
       })
-      .catch(function (err) {
+      .catch(function(err) {
         alert(err);
       });
   }
@@ -54,10 +55,10 @@ function FreeBbsReply(props) {
       .get("http://localhost:3000/freeReplyList", {
         params: { replySeq: replySeq, start: start, limit: limit },
       })
-      .then(function (resp) {
+      .then(function(resp) {
         setReplylist(resp.data);
       })
-      .catch(function (err) {
+      .catch(function(err) {
         alert(err);
       });
   }
@@ -76,8 +77,8 @@ function FreeBbsReply(props) {
       <div>
         <table border="1" align="center">
           <colgroup>
-            <col width={"100px"} />
-            <col width={"700px"} />
+            <col width={"20%"} />
+            <col width={"80%"} />
           </colgroup>
           <thead>
             <tr>
@@ -87,7 +88,7 @@ function FreeBbsReply(props) {
           </thead>
           <tbody>
             {replylist && replylist.length ? (
-              replylist.map(function (reply, i) {
+              replylist.map(function(reply, i) {
                 return (
                   <tr key={i}>
                     <td>{reply.writer}</td>
@@ -102,17 +103,21 @@ function FreeBbsReply(props) {
             )}
             <tr>
               <td colSpan={2}>
-                <button onClick={handleLoadMore}>댓글 더보기</button>
+                <button onClick={handleLoadMore}>
+                  <b>댓글 더보기</b>
+                </button>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
                 <br />
-                <textarea style={{ width: "95%", resize: "none" }} value={content} onChange={contentChange}></textarea>
-                <button type="submit" onClick={writeFreebbsReply}>
-                  작성하기
-                </button>
+                <textarea style={{ width: "100%", resize: "none" }} value={content} onChange={contentChange}></textarea>
                 <br /> <br />
+                <div className="d-grid gap-2">
+                  <Button variant="secondary" size="sm" type="submit" onClick={writeFreebbsReply}>
+                    작성하기
+                  </Button>
+                </div>
               </td>
             </tr>
           </tbody>

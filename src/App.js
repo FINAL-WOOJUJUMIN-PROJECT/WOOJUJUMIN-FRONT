@@ -32,7 +32,7 @@ import FreeBbsList from "./components/freebbs/freeBbsList";
 import FreeBbsDetail from "./components/freebbs/freeBbsDetail";
 import FreeBbsWrite from "./components/freebbs/freeBbsWrite";
 import FreeBbsModify from "./components/freebbs/freeBbsModify";
-import FreeBbsDelete from "./components/freebbs/freeBbsDelete";
+
 import FreeBbsReply from "./components/freebbs/freeBbsReply";
 import FreeBbslikey from "./components/freebbs/freeBbslikey";
 
@@ -185,7 +185,7 @@ function App() {
             <Route path="/freeBbsDetail/:bbsSeq" element={<FreeBbsDetail />} />
             <Route path="/freeBbsWrite" element={<FreeBbsWrite />} />
             <Route path="/freeBbsModify/:bbsSeq" element={<FreeBbsModify />} />
-            <Route path="/freeBbsDelete/:bbsSeq" element={<FreeBbsDelete />} />
+
             <Route path="/partybbs" element={<Partybbs />} />
             <Route path="/partybbslist" element={<Partybbslist />} />
             <Route path="/partybbsdetail/:seq" element={<Partybbsdetail />} />
